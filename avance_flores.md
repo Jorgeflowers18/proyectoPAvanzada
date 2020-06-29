@@ -1,4 +1,4 @@
-1. Cuál es la población economicamente activa registrada en el área rural y en la urbana en los años 2015 al 2019.
+## __¿Cuál es la población economicamente activa registrada en el área rural y en la urbana en los años 2015 al 2019?__
 ### Urbano
 
 `dataUrbano.select("anio").groupBy("anio").count().show()`
@@ -32,7 +32,7 @@
 ~~~
 * * *
 
-2. En que área, se encuentra la mayor concentración de ciudadanos sin ningún tipo de instrucción.
+## __¿En que área, se encuentra la mayor concentración de ciudadanos sin ningún tipo de instrucción?__
 
 ### Urbano
 
@@ -57,7 +57,7 @@
 +------------+-----+
 ~~~
 * * *
-3. Cuál es el porcentaje de personas que registran mensualmente ingresos superiores a 1000 dólares por área.
+## __¿Cuál es el porcentaje de personas que registran mensualmente ingresos superiores a 1000 dólares por área?__
 
 
 ### Urbano
@@ -76,7 +76,7 @@
 2.9876639937320615
 ~~~
 * * *
-4. Cuál es la cantidad de personas que registran mensualmente ingresos superiores a 1000 dólares en cada nivel de instrucción.
+## __¿Cuál es la cantidad de personas que registran mensualmente ingresos superiores a 1000 dólares en cada nivel de instrucción?__
 
 ### Urbano 
 `dataUrbano.select("nvl_instr").where($"ingres_labo" > 1000).groupBy("nvl_instr").count().sort("nvl_instr").show()`
@@ -114,7 +114,7 @@
 +--------------------+-----+
 ~~~
 * * *
-5. Cual es el porcentaje de ciudadanos casados que registran ingresos mayores al salario basico.
+## __¿Cuál es el porcentaje de ciudadanos casados que registran ingresos mayores al salario basico?__
 
 ### Urbano
 `dataUrbano.select("anio").where($"ingres_labo" > 400 && $"est_civil" === "1 - Casado(a)" && $"anio" === 2015).count()*100/dataUrbano.count().toDouble`
