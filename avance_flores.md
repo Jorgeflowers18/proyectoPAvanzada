@@ -11,6 +11,7 @@ dataUrbano.select("anio").groupBy("anio").count().show()
 
 
 Rural
+~~~
 +----+-----+
 |anio|count|
 +----+-----+
@@ -20,8 +21,10 @@ Rural
 |2016|44486|
 |2017|56025|
 +----+-----+
+~~~
 
 Urbano
+~~~
 +----+-----+
 |anio|count|
 +----+-----+
@@ -31,8 +34,10 @@ Urbano
 |2016|66674|
 |2017|84628|
 +----+-----+
+~~~
 
-2. dataUrbano.where($"nvl_instr" === "01 - Ninguno").groupBy("nvl_instr").count().show()
+2. 
+dataUrbano.where($"nvl_instr" === "01 - Ninguno").groupBy("nvl_instr").count().show()
 dataRural.where($"nvl_instr" === "01 - Ninguno").groupBy("nvl_instr").count().show()
 +------------+-----+
 |   nvl_instr|count|
