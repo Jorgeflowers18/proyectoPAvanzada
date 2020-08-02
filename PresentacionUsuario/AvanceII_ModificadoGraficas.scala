@@ -86,9 +86,9 @@ display(data.where(($"nivel_de_instruccion" === "08 - Superior no universitario"
 // Área Urbana
 display(sc.parallelize(Seq(
   ("Otros", 761),
-  ("Trabajadores agropecuarios y pesqueros",1292),
-  ("Comerciantes y servicios",1407),
-  ("Ocupaciones elementales", 2129)
+  ("Agropecuarios/pesqueros",1292),
+  ("Comerciantes/servicios",1407),
+  ("Oc. Elementales", 2129)
  )).toDF("nivel", "cant"))
 
 // COMMAND ----------
@@ -96,8 +96,8 @@ display(sc.parallelize(Seq(
 // Área Rural
 display(sc.parallelize(Seq(
   ("Otros", 1333), 
-  ("Trabajadores agropecuarios y pesqueros", 10040),
-  ("Ocupaciones elementales", 6016)
+  ("Agropecuarios/pesqueros", 10040),
+  ("Oc. Elementales", 6016)
  )).toDF("nivel", "cant"))
 
 // COMMAND ----------
