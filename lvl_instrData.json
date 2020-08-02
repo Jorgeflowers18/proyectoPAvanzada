@@ -1,0 +1,28 @@
+
+val schema3 = StructType(
+    Array(
+        StructField("nivel", StringType, true), 
+        StructField("cant", IntegerType, true)
+    ));
+
+val lvlIns = {"null": 120};{"01 - Personal direct./admin. pública y empresas": 3};{"02 - Profesionales científicos e intelectuales" : 9};{"03 - Técnicos y profesionales de nivel medio":27},{"04 - Empleados de oficina":18};{"05 - Trabajad. de los servicios y comerciantes":1407};{"06 - Trabajad. calificados agropecuarios y pesqueros":1292};{"07 - Oficiales operarios y artesanos":492};{"08 - Operadores de instalac. máquinas y montad":92};{"09 - Trabajadores no calificados, ocupaciones elementales": 2129}.toDF(schema3) 
+
+val datains = sc.parallelize(Seq(
+  ("null", 120), 
+  ("Personal directivo, empresas y adm. pública", 3), 
+  ("Científicos e intelectuales", 9), 
+  ("Profesionales de nivel medio",27), 
+  ("Oficinistas",18), 
+  ("Comerciantes y servicios",1407),
+  ("Trabajadores agropecuarios y pesqueros",1292),
+  ("Operarios y artesanos",492),
+  ("Operadors de máquinaria",92),
+  ("Ocupaciones elementales", 2129)
+ )).toDF("nivel", "cant")
+
+val datains = sc.parallelize(Seq(
+  ("Otros", 761),
+  ("Trabajadores agropecuarios y pesqueros",1292),
+  ("Comerciantes y servicios",1407),
+  ("Ocupaciones elementales", 2129)
+ )).toDF("nivel", "cant")
