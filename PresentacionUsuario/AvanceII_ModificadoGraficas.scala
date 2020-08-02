@@ -30,7 +30,7 @@ display(dataRural.select("anio").groupBy("anio").count().orderBy($"anio"))
 // COMMAND ----------
 
 // DBTITLE 1,¿En que área se encuentra la mayor concentración de ciudadanos sin ningún tipo de instrucción?
-display(data.where($"nivel_de_instruccion" === "01 - Ninguno").groupBy("nivel_de_instruccion").pivot("area").count())
+display(data.where(($"nivel_de_instruccion" === "01 - Ninguno")).groupBy("area").count())
 
 // COMMAND ----------
 
@@ -42,12 +42,24 @@ printf("Área Rural = %% %.2f", dataRural.select("id_persona").where($"ingreso_l
 
 // DBTITLE 1,¿Cuál es la cantidad de personas que registran mensualmente ingresos superiores a 1000 dólares en cada nivel de instrucción?
 // Área Urbana
-display(dataUrbano.select("nivel_de_instruccion").where($"ingreso_laboral" > 1000).groupBy("nivel_de_instruccion").count().sort("nivel_de_instruccion"))
+val ingUrb1 = dataUrbano.where($"ingreso_laboral" > 1000)
+val ingUrb2 = ingUrb1.groupBy("anio").pivot($"nivel_de_instruccion").count().orderBy($"anio")
+val ingUrb3 = ingUrb2.withColumn("Ninguno", $"01 - Ninguno").withColumn("Alfabetizados", $"02 - Centro de alfabetización").withColumn("Primaria", $"04 - Primaria").withColumn("Básica", $"05 - Educación Básica").withColumn("Secundaria", $"06 - Secundaria").withColumn("Media", $"07 - Educación  Media").withColumn("Tecnologías", $"08 - Superior no universitario").withColumn("Universitaria", $"09 - Superior Universitario").withColumn("Post-grado", $"10 - Post-grado")
+
+// COMMAND ----------
+
+display(ingUrb3.drop("01 - Ninguno", "02 - Centro de alfabetización", "04 - Primaria", "05 - Educación Básica", "06 - Secundaria", "07 - Educación  Media", "08 - Superior no universitario", "09 - Superior Universitario", "10 - Post-grado"))
 
 // COMMAND ----------
 
 // Área Rural
-display(dataRural.select("nivel_de_instruccion").where($"ingreso_laboral" > 1000).groupBy("nivel_de_instruccion").count().sort("nivel_de_instruccion"))
+val ingRur1 = dataRural.where($"ingreso_laboral" > 1000)
+val ingRur2 = ingRur1.groupBy("anio").pivot($"nivel_de_instruccion").count().orderBy($"anio")
+val ingRur3 = ingRur2.withColumn("Ninguno", $"01 - Ninguno").withColumn("Alfabetizados", $"02 - Centro de alfabetización").withColumn("Primaria", $"04 - Primaria").withColumn("Básica", $"05 - Educación Básica").withColumn("Secundaria", $"06 - Secundaria").withColumn("Media", $"07 - Educación  Media").withColumn("Tecnologías", $"08 - Superior no universitario").withColumn("Universitaria", $"09 - Superior Universitario").withColumn("Post-grado", $"10 - Post-grado")
+
+// COMMAND ----------
+
+display(ingUrb3.drop("01 - Ninguno", "02 - Centro de alfabetización", "04 - Primaria", "05 - Educación Básica", "06 - Secundaria", "07 - Educación  Media", "08 - Superior no universitario", "09 - Superior Universitario", "10 - Post-grado"))
 
 // COMMAND ----------
 
@@ -65,25 +77,28 @@ printf("Año 2019 = %% %.2f", dataRural.select("id_persona").where($"ingreso_lab
 
 // COMMAND ----------
 
-// DBTITLE 1,¿Cuántas personas según el área alcanzaron un nivel de estudio superior?
-// Área Rural
-dataRural.where(($"nivel_de_instruccion" === "08 - Superior no universitario") || ($"nivel_de_instruccion" === "09 - Superior Universitario")).groupBy("nivel_de_instruccion").count().orderBy($"count".desc).show(false)
-
-// COMMAND ----------
-
-// Área Urbana
-dataUrbano.where(($"nivel_de_instruccion" === "08 - Superior no universitario") || ($"nivel_de_instruccion" === "09 - Superior Universitario")).groupBy("nivel_de_instruccion").count().orderBy($"count".desc).show(false)
+// DBTITLE 1,¿Cuántas personas según el área alcanzaron un nivel de estudio superior universitario?
+display(data.where(($"nivel_de_instruccion" === "08 - Superior no universitario") || ($"nivel_de_instruccion" === "09 - Superior Universitario")).groupBy("area").pivot($"nivel_de_instruccion").count().sort("area"))
 
 // COMMAND ----------
 
 // DBTITLE 1,¿En qué grupo de ocupación se concentra la mayor cantidad de personas sin ningún tipo de preparación?
 // Área Urbana
-display(dataUrbano.select("grupo_ocupacion").where($"nivel_de_instruccion" === "01 - Ninguno").groupBy("grupo_ocupacion").count())
+display(sc.parallelize(Seq(
+  ("Otros", 761),
+  ("Trabajadores agropecuarios y pesqueros",1292),
+  ("Comerciantes y servicios",1407),
+  ("Ocupaciones elementales", 2129)
+ )).toDF("nivel", "cant"))
 
 // COMMAND ----------
 
 // Área Rural
-display(dataRural.select("grupo_ocupacion").where($"nivel_de_instruccion" === "01 - Ninguno").groupBy("grupo_ocupacion").count())
+display(sc.parallelize(Seq(
+  ("Otros", 1333), 
+  ("Trabajadores agropecuarios y pesqueros", 10040),
+  ("Ocupaciones elementales", 6016)
+ )).toDF("nivel", "cant"))
 
 // COMMAND ----------
 
@@ -124,3 +139,7 @@ val promedioRural = (menor18InformalRural / dataRural.count.toDouble)*100
 // COMMAND ----------
 
 printf("La cantidad de personas menores de edad en el área Rural es: %d, de estos la cantidad que trabaja en el sector informal son %d lo que corresponde a un %% %.2f\nLa cantidad de personas menores de edad en el área Urbana es: %d, de estos la cantidad que trabaja en el sector informal son %d lo que corresponde a un %% %.2f\n", menor18Rural, menor18InformalRural, promedioRural, menor18Urbana, menor18InformalUrbana, promedioUrbana)
+
+// COMMAND ----------
+
+
