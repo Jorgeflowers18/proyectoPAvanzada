@@ -1,0 +1,33 @@
+
+dataUrbano.select("grupo_ocupacion").where($"nivel_de_instruccion" === "01 - Ninguno").groupBy("grupo_ocupacion").count().orderBy($"grupo_ocupacion").show(false)
++---------------------------------------------------------+-----+
+|grupo_ocupacion                                          |count|
++---------------------------------------------------------+-----+
+|null                                                     |120  |
+|01 - Personal direct./admin. pública y empresas          |3    |
+|02 - Profesionales científicos e intelectuales           |9    |
+|03 - Técnicos y profesionales de nivel medio             |27   |
+|04 - Empleados de oficina                                |18   |
+|05 - Trabajad. de los servicios y comerciantes           |1407 |
+|06 - Trabajad. calificados agropecuarios y pesqueros     |1292 |
+|07 - Oficiales operarios y artesanos                     |492  |
+|08 - Operadores de instalac. máquinas y montad.          |92   |
+|09 - Trabajadores no calificados, ocupaciones elementales|2129 |
++---------------------------------------------------------+-----+
+
+dataRural.select("grupo_ocupacion").where($"nivel_de_instruccion" === "01 - Ninguno").groupBy("grupo_ocupacion").count().orderBy($"grupo_ocupacion").show(false)
++---------------------------------------------------------+-----+
+|grupo_ocupacion                                          |count|
++---------------------------------------------------------+-----+
+|null                                                     |76   |
+|01 - Personal direct./admin. pública y empresas          |5    |
+|02 - Profesionales científicos e intelectuales           |1    |
+|03 - Técnicos y profesionales de nivel medio             |11   |
+|04 - Empleados de oficina                                |11   |
+|05 - Trabajad. de los servicios y comerciantes           |614  |
+|06 - Trabajad. calificados agropecuarios y pesqueros     |10040|
+|07 - Oficiales operarios y artesanos                     |503  |
+|08 - Operadores de instalac. máquinas y montad.          |111  |
+|09 - Trabajadores no calificados, ocupaciones elementales|6016 |
+|10 - Fuerzas Armadas                                     |1    |
++---------------------------------------------------------+-----+
